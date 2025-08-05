@@ -42,6 +42,20 @@ class ServiceProviderSeeder extends Seeder
                 'starting_price' => 7500,
                 'skill_ids' => [7, 8, 9],
             ],
+            [
+                'user_id' => 5,
+                'description' => 'Experienced web developer specializing in e-commerce solutions',
+                'skill_domain_id' => 5,
+                'starting_price' => 4500,
+                'skill_ids' => [10, 11, 12],
+            ],
+            [
+                'user_id' => 6,
+                'description' => 'Expert in digital marketing strategies and social media management',
+                'skill_domain_id' => 7,
+                'starting_price' => 9500,
+                'skill_ids' => [12, 13, 14],
+            ],
         ];
 
         foreach ($serviceProviders as $provider) {

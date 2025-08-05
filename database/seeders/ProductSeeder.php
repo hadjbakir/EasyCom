@@ -161,7 +161,7 @@ class ProductSeeder extends Seeder
                 'quantity' => 8,
                 'minimum_quantity' => 1,
                 'image' => 'product-8.jpg'
-            ], 
+            ],
             [
                 'supplier_id' => 2,
                 'category_id' => 2,
@@ -200,7 +200,7 @@ class ProductSeeder extends Seeder
                 'description' => 'New Dell laptop',
                 'quantity' => 8,
                 'minimum_quantity' => 1,
-                'image' => 'product-12.jpg'
+                'image' => 'product-12.png'
             ],
             [
                 'supplier_id' => 2,

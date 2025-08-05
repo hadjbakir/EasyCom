@@ -51,6 +51,26 @@ class UserSeeder extends Seeder
     ]);
 
     User::create([
+        'full_name' => 'Said Ben',
+        'email' => 'said@gmail.com',
+        'password' => Hash::make('Pass1234'),
+        'phone_number' => '0555323422',
+        'address' => '123 Algiers St, Algiers, Algeria',
+        'role' => 'user',
+        'email_verified_at' => now(),
+    ]);
+
+    User::create([
+        'full_name' => 'Zaki Ben',
+        'email' => 'zaki@gmail.com',
+        'password' => Hash::make('Pass1234'),
+        'phone_number' => '0555323465',
+        'address' => '123 Algiers St, Algiers, Algeria',
+        'role' => 'user',
+        'email_verified_at' => now(),
+    ]);
+
+    User::create([
         'full_name' => 'Admin',
         'email' => 'admin@gmail.com',
         'password' => Hash::make('Pass1234'),
