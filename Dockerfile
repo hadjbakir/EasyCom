@@ -16,7 +16,8 @@ COPY --chown=www-data:www-data . /var/www
 RUN chmod -R 755 /var/www
 RUN composer install
 
-COPY .env.example .env
+# Remove the problematic .env copy - let environment variables handle this
+# COPY .env.example .env
 RUN php artisan key:generate
 
 EXPOSE 8000
