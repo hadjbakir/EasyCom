@@ -57,4 +57,19 @@ class Workspace extends Model
     {
         return $this->hasMany(WorkspaceReview::class, 'workspace_id');
     }
+
+    /**
+     * Accessor for the main picture URL. Converts stored path into served media URL.
+     */
+    public function getPictureAttribute($value): ?string
+    {
+        if (!$value) {
+            return null;
+        }
+        if (is_string($value) && (str_starts_with($value, 'http://') || str_starts_with($value, 'https://'))) {
+            return $value;
+        }
+        $relative = ltrim(preg_replace('#^/storage/#', '', (string) $value), '/');
+        return url('/media/' . $relative);
+    }
 }

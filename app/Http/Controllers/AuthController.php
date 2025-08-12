@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Storage; 
-use Illuminate\Support\Facades\Log; 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 
   /**
@@ -251,8 +251,8 @@ public function login(Request $request)
             'message' => 'User retrieved successfully'
         ], 200);
     }
-   
-    
+
+
     /**
  * @OA\Post(
  *     path="/api/user/update",
@@ -311,11 +311,11 @@ public function login(Request $request)
      public function update(Request $request)
      {
          $user = $request->user();
-     
+
          if (!$user) {
              return response()->json(['message' => 'Unauthenticated'], 401);
          }
-     
+
          $validator = Validator::make($request->all(), [
              'full_name' => 'sometimes|string|max:255',
              'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
@@ -328,11 +328,11 @@ public function login(Request $request)
              'address' => 'nullable|string|max:255',
              'city' => 'nullable|string|max:255',
          ]);
-     
+
          if ($validator->fails()) {
              return response()->json($validator->errors(), 400);
          }
-     
+
          $data = $request->only(['full_name', 'email', 'phone_number', 'address', 'city']);
          if ($request->hasFile('picture')) {
              if ($user->picture && Storage::disk('public')->exists(str_replace('/storage/', '', $user->picture))) {
@@ -340,11 +340,12 @@ public function login(Request $request)
              }
              $file = $request->file('picture');
              $path = $file->storeAs('pictures', "user_{$user->id}_" . time() . '.' . $file->extension(), 'public');
-             $data['picture'] = Storage::url($path);
+             // Store relative path; accessor will expose /media URL
+             $data['picture'] = $path;
          }
-     
+
          $user->update($data);
-     
+
          return response()->json([
              'user' => $user,
              'message' => 'User updated successfully'
@@ -421,7 +422,7 @@ public function updatePassword(Request $request)
     $user->save();
 
     return response()->json(['message' => 'Password updated successfully'], 200);
-}   
+}
 
 
 

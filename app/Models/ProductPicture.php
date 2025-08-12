@@ -17,4 +17,19 @@ class ProductPicture extends Model
     {
         return $this->hasOne(ProductFeature::class, 'image_id');
     }
+
+    /**
+     * Accessor to normalize picture URL through /media.
+     */
+    public function getPictureAttribute($value): ?string
+    {
+        if (!$value) {
+            return null;
+        }
+        if (is_string($value) && (str_starts_with($value, 'http://') || str_starts_with($value, 'https://'))) {
+            return $value;
+        }
+        $relative = ltrim(preg_replace('#^/storage/#', '', (string) $value), '/');
+        return url('/media/' . $relative);
+    }
 }

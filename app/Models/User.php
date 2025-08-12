@@ -100,5 +100,20 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Supplier::class, 'saved_suppliers', 'user_id', 'supplier_id')
                     ->withTimestamps();
     }
+    /**
+     * Accessor to expose a publicly accessible URL for the user's picture.
+     */
+    public function getPictureAttribute($value): ?string
+    {
+        if (!$value) {
+            return null;
+        }
+        $trimmed = is_string($value) ? $value : '';
+        if (str_starts_with($trimmed, 'http://') || str_starts_with($trimmed, 'https://')) {
+            return $trimmed;
+        }
+        $relative = ltrim(preg_replace('#^/storage/#', '', $trimmed), '/');
+        return url('/media/' . $relative);
+    }
 }
 ?>
